@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
+  "author": "MoePus",
+  "description": "Song Request Tool for BiliBili",
+  "gameVersion": "1.13.2",
+  "id": "BiliSRT",
+  "name": "BiliSRT",
+  "version": "1.0.0",
+  "dependsOn": {
+    "BSIPA": "^4.0.0"
+  },
+  "loadAfter": [
+    "SongCore",
+    "BeatSaverDownloader",
+    "SongBrowser"
+  ]
+}
