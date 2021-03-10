@@ -16,7 +16,8 @@ namespace BiliSRT_Plugin
             this.ReceivedDanmaku += Plugin_ReceivedDanmaku;
             this.PluginAuth = "MoePus";
             this.PluginName = "BiliSRT";
-            this.PluginVer = "v0.0.1";
+            this.PluginVer = "v0.0.2";
+            this.Start();
         }
 
         private void Plugin_ReceivedDanmaku(object sender, BilibiliDM_PluginFramework.ReceivedDanmakuArgs e)

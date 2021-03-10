@@ -70,11 +70,11 @@ namespace BiliSRT
         }
         private static BiliSRT _instance;
 
-        private HashSet<string> downloadedSongHashes;
-        private Dictionary<string, CustomPreviewBeatmapLevel> downloadedSongs;
-        private HashSet<string> requestedSongs;
-        private HashSet<string> downloadQueue;
-        private HashSet<string> adjustQueue;
+        private HashSet<string> downloadedSongHashes = new HashSet<string>();
+        private Dictionary<string, CustomPreviewBeatmapLevel> downloadedSongs = new Dictionary<string, CustomPreviewBeatmapLevel>();
+        private HashSet<string> requestedSongs = new HashSet<string>();
+        private HashSet<string> downloadQueue = new HashSet<string>();
+        private Dictionary<string, DateTime> adjustQueue = new Dictionary<string, DateTime>();
 
         private BeatSaverDownloader.UI.MoreSongsFlowCoordinator moreSongsFlowCooridinator;
 
@@ -89,12 +89,6 @@ namespace BiliSRT
         }
         public void Awake()
         {
-            downloadedSongHashes = new HashSet<string>();
-            downloadedSongs = new Dictionary<string, CustomPreviewBeatmapLevel>();
-            requestedSongs = new HashSet<string>();
-            downloadQueue = new HashSet<string>();
-            adjustQueue = new HashSet<string>();
-
             UnityEngine.Object.DontDestroyOnLoad(gameObject);
             ReconnectPipe();
             if (!Loader.AreSongsLoaded)
@@ -121,7 +115,7 @@ namespace BiliSRT
                         if (MapExists(key))
                         {
                             Plugin.log.Info($"key {key} exists, adjust its ts");
-                            adjustQueue.Add(key);
+                            adjustQueue[key] = DateTime.UtcNow;
                         }
                         else
                         {
@@ -184,17 +178,16 @@ namespace BiliSRT
 
             var cachedLastWriteTimes = AccessTools.FieldRefAccess<Dictionary<string, double>>(__instance.GetType(), "_cachedLastWriteTimes")(__instance);
             var epoch = new DateTime(1970, 1, 1);
-            foreach (var key in Instance.adjustQueue)
+            foreach (var key in Instance.adjustQueue.Keys)
             {
                 var levelID = Instance.downloadedSongs[key].levelID;
                 Plugin.log.Info($"Lookup {key}-{levelID}'s ts");
                 if (cachedLastWriteTimes.ContainsKey(levelID))
                 {
-                    cachedLastWriteTimes[levelID] = (DateTime.UtcNow - epoch).TotalMilliseconds;
+                    cachedLastWriteTimes[levelID] = (Instance.adjustQueue[key] - epoch).TotalMilliseconds;
                     Plugin.log.Info($"Adjust song {key}'s ts");
                 }
             }
-            Instance.adjustQueue.Clear();
             return true;
         }
         private async void DownloadSong(string key)

@@ -5,7 +5,7 @@
   "gameVersion": "1.13.2",
   "id": "BiliSRT",
   "name": "BiliSRT",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "dependsOn": {
     "BSIPA": "^4.0.0"
   },
