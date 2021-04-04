@@ -1,9 +1,9 @@
 # BiliSRT
-*A BeatSaber Song request tool for bilibili livehime*
+*A BeatSaber Song request tool for bilibili danmuji*
 
 ## 安装
 * BiliSRT.dll放置于BeatSaber游戏PLugins目录下
-* BiliLiveDM_Plugin.dll放置于直播姬插件目录下，并再直播姬中开启插件
+* BiliLiveDM_Plugin.dll放置于弹幕姬插件目录下
 
 ## 使用
 * 进入BeatSaber游戏主界面后，可使用弹幕`!bsr key`来点歌。
